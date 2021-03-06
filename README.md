@@ -2,6 +2,28 @@
 
 Implementation of [BARE][bare web] in R⁷RS scheme.
 
+## Status
+
+Work in progress, not really usable currently. Features implemented:
+
+* [x] uint
+* [x] int
+* [x] u8, u16, u32, u64
+* [x] i8, i16, i32, i64
+* [ ] f32, f64
+* [x] bool
+* [ ] enum
+* [ ] string
+* [ ] data<length>
+* [ ] data
+* [ ] void
+* [ ] optional<type>
+* [ ] [length]type
+* [ ] []type
+* [ ] map[type A]type B
+* [ ] (type | type | ...)
+* [ ] struct
+
 ## License
 
 This program is free software: you can redistribute it and/or modify
