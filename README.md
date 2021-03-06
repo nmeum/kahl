@@ -17,7 +17,7 @@ Work in progress, not really usable currently. Features implemented:
 * [ ] data<length>
 * [ ] data
 * [ ] void
-* [ ] optional<type>
+* [x] optional<type>
 * [ ] [length]type
 * [ ] []type
 * [ ] map[type A]type B

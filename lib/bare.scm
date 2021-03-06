@@ -82,3 +82,12 @@
       (parse-map
         (parse-bytevector size)
         utf8->string))))
+
+;;> Parses an optional value of the combinator.
+(define (parse-optional type)
+  (parse-with-size-field
+    parse-u8
+    (lambda (size)
+      (if (zero? size)
+        parse-epsilon
+        type))))

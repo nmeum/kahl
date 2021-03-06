@@ -12,4 +12,5 @@
 
 (include "tests/integer.scm"
          "tests/boolean.scm"
-         "tests/string.scm")
+         "tests/string.scm"
+         "tests/aggregated.scm")
