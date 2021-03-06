@@ -126,3 +126,7 @@
     (lambda (id)
       ;; TODO: explicitly handle (>= id (vector-length type-vector))
       (vector-ref type-vector id))))
+
+;;> Parses a BARE struct. Each comibinator in \var{types} is invoked
+;;> sequentially.
+(define parse-struct parse-seq) ;; TODO: Consider returning vector.

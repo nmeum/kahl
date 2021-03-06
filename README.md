@@ -22,7 +22,7 @@ Work in progress, not really usable currently. Features implemented:
 * [x] []type
 * [x] map[type A]type B
 * [x] (type | type | ...)
-* [ ] struct
+* [x] struct
 
 ## License
 

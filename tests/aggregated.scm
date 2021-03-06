@@ -41,3 +41,11 @@
                   parse-u16  ;; type id → 1
                 ))
               #u8(#x01 #x12 #x13)))
+
+(test-group "struct"
+  (test-parse '(#t #xff #f)
+              (parse-struct
+                parse-bool
+                parse-u8
+                parse-bool)
+              #u8(#x01 #xff #x00)))
