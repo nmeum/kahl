@@ -104,7 +104,9 @@
           size size)))
     reverse)) ;; To ensure that last field is authoritive with assoc
 
-;;> Parses a list of \var{size} values of \var{type}.
+;;> Parses a list of \var{size} values of \var{type}. If no \var{size}
+;;> was specified, this combinator parser a variable-length list of
+;;> values.
 (define (parse-list type . size)
   (if (null? size)
     (parse-with-size-field
