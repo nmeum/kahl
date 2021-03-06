@@ -20,7 +20,7 @@ Work in progress, not really usable currently. Features implemented:
 * [x] optional<type>
 * [ ] [length]type
 * [ ] []type
-* [ ] map[type A]type B
+* [x] map[type A]type B
 * [ ] (type | type | ...)
 * [ ] struct
 

@@ -91,3 +91,15 @@
       (if (zero? size)
         parse-epsilon
         type))))
+
+;;> Parses a BARE map with keys of type \var{key-type} and
+;;> values of type \var{val-type}.
+(define (parse-mapping key-type val-type)
+  (parse-map
+    (parse-with-size-field
+      parse-var-uint
+      (lambda (size)
+        (parse-repeat
+          (parse-seq key-type val-type)
+          size size)))
+    reverse)) ;; To ensure that last field is authoritive with assoc
