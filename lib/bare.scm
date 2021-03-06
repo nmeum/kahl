@@ -14,3 +14,9 @@
   (parse-map
     parse-var-uint
     uint->number))
+
+;;> Parses a BARE boolean value.
+(define parse-bool
+  (parse-map
+    parse-byte
+    (lambda (x) (not (zero? x)))))

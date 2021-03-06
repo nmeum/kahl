@@ -2,7 +2,7 @@
   (import (scheme base) (scheme file) (scheme write) (srfi 1) (srfi 151))
 
   (export make-parse-stream bytevector->parse-stream parse)
-  (export parse-var-uint parse-var-int)
+  (export parse-var-uint parse-var-int parse-bool)
 
   (include "lib/util.scm"
            "lib/parser.scm"
