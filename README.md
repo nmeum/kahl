@@ -19,7 +19,7 @@ Work in progress, not really usable currently. Features implemented:
 * [ ] void
 * [x] optional<type>
 * [x] [length]type
-* [ ] []type
+* [x] []type
 * [x] map[type A]type B
 * [ ] (type | type | ...)
 * [ ] struct

@@ -105,5 +105,12 @@
     reverse)) ;; To ensure that last field is authoritive with assoc
 
 ;;> Parses a list of \var{size} values of \var{type}.
-(define (parse-list size type)
-  (parse-repeat type size size))
+(define (parse-list type . size)
+  (if (null? size)
+    (parse-with-size-field
+      parse-var-uint
+      (lambda (size)
+        (parse-repeat
+          type
+          size size)))
+    (parse-repeat type (car size) (car size))))
