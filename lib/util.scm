@@ -33,7 +33,7 @@
     seed
     (%bytevector-fold-right 0)))
 
-;;> Converts BARE bytvector to scheme unsigned number.
+;;> Converts BARE bytevector to unsigned number.
 (define (bytevector->uint bv)
   (if (> (bytevector-length bv) 10)
     (error "maximum length of encoded uint is 10 bytes")
@@ -46,3 +46,10 @@
                            lst)))
             (append no-msb ys)))
         '() bv))))
+
+;;> Converts BARE unsigned integer to signed scheme number.
+(define (uint->number n)
+  (let ((x (arithmetic-shift n -1)))
+    (if (zero? (first-set-bit n))
+      (bitwise-eqv x)
+      x)))
