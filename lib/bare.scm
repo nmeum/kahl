@@ -103,3 +103,7 @@
           (parse-seq key-type val-type)
           size size)))
     reverse)) ;; To ensure that last field is authoritive with assoc
+
+;;> Parses a list of \var{size} values of \var{type}.
+(define (parse-list size type)
+  (parse-repeat type size size))

@@ -18,7 +18,7 @@ Work in progress, not really usable currently. Features implemented:
 * [ ] data
 * [ ] void
 * [x] optional<type>
-* [ ] [length]type
+* [x] [length]type
 * [ ] []type
 * [x] map[type A]type B
 * [ ] (type | type | ...)

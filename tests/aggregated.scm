@@ -10,3 +10,9 @@
   (test-parse '()
               (parse-mapping parse-u16 parse-u32)
               #u8(#x0)))
+
+(test-group "parse []type"
+  (test-parse '() (parse-list 0 parse-u32) #u8())
+  (test-parse '(#x23 #x42)
+              (parse-list 2 parse-u8)
+              #u8(#x23 #x42)))
