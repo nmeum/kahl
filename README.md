@@ -13,7 +13,7 @@ Work in progress, not really usable currently. Features implemented:
 * [ ] f32, f64
 * [x] bool
 * [ ] enum
-* [ ] string
+* [x] string
 * [ ] data<length>
 * [ ] data
 * [ ] void

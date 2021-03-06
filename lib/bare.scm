@@ -73,3 +73,12 @@
 (define parse-i16 (parse-int 2))
 (define parse-i32 (parse-int 3))
 (define parse-i64 (parse-int 4))
+
+;;> Parses a BEAR string.
+(define parse-string
+  (parse-with-size-field
+    parse-var-uint
+    (lambda (size)
+      (parse-map
+        (parse-bytevector size)
+        utf8->string))))

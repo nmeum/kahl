@@ -218,6 +218,19 @@
     (lambda (lst)
       (apply bytevector lst))))
 
+;;> TODO.
+
+(define (parse-with-size-field size-field f)
+  (define yield (lambda (r s i fk) r))
+
+  (lambda (source index sk fk)
+    ;; call-with-parse modifies source and needs to be called first.
+    (let* ((size (call-with-parse size-field source index yield fk))
+           (field-start (parse-stream-offset source)))
+      (if size
+        ((f size) source field-start sk fk)
+        (fk source index "expected field of given size")))))
+
 ;;> The sequence combinator. Each combinator is applied in turn just
 ;;> past the position of the previous. If all succeed, returns a list
 ;;> of the results in order, skipping any ignored values.
