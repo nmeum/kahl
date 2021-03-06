@@ -116,3 +116,13 @@
           type
           size size)))
     (parse-repeat type (car size) (car size))))
+
+;;> Parses a tagged union. This combinator takes a \var{type-vector},
+;;> that is a vector of combinators where each vector index reponse
+;;> to the numeric identifier of a BARE type.
+(define (parse-union type-vector)
+  (parse-with-size-field
+    parse-var-uint
+    (lambda (id)
+      ;; TODO: explicitly handle (>= id (vector-length type-vector))
+      (vector-ref type-vector id))))

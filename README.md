@@ -21,7 +21,7 @@ Work in progress, not really usable currently. Features implemented:
 * [x] [length]type
 * [x] []type
 * [x] map[type A]type B
-* [ ] (type | type | ...)
+* [x] (type | type | ...)
 * [ ] struct
 
 ## License

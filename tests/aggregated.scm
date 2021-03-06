@@ -24,3 +24,20 @@
   (test-parse '(#x4223)
               (parse-list parse-u16)
               #u8(#x1 #x23 #x42)))
+
+(test-group "union"
+  (test-parse #t
+              (parse-union
+                (vector
+                  parse-bool ;; type id → 0
+                  parse-u16  ;; type id → 1
+                ))
+              #u8(#x00 #x01))
+
+  (test-parse #x1312
+              (parse-union
+                (vector
+                  parse-bool ;; type id → 0
+                  parse-u16  ;; type id → 1
+                ))
+              #u8(#x01 #x12 #x13)))
