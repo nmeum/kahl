@@ -6,6 +6,10 @@
     (test-parse #x4223 parse-u16 #u8(#x23 #x42))
     (test-parse 65535  parse-u16 #u8(#xff #xff)))
 
+  (test-group "parse fixed-size ints"
+    (test-parse 126    parse-i8  #u8(#x7e))
+    (test-parse -128   parse-i8  #u8(#x80)))
+
   (test-group "parse variable length uints"
     (test-parse 0   parse-var-uint #u8(0))
     (test-parse 300 parse-var-uint #u8(#xac #x2)))

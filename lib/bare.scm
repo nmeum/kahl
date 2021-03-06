@@ -51,13 +51,25 @@
     (lambda (x) (not (zero? x)))))
 
 ;;> Parses an unsigned integer of \var{size} bytes.
-(define (parse-fixed size)
+(define (parse-uint size)
   (parse-map
     (parse-bytevector size)
     (lambda (bv)
       (bytevector->number size bv))))
 
-(define parse-u8  (parse-fixed 1))
-(define parse-u16 (parse-fixed 2))
-(define parse-u32 (parse-fixed 3))
-(define parse-u64 (parse-fixed 4))
+;;> Parses a signed integer of \var{size} bytes.
+(define (parse-int size)
+  (parse-map
+    (parse-uint size)
+    (lambda (n)
+      (from-twocomp (* size 8) n))))
+
+(define parse-u8  (parse-uint 1))
+(define parse-u16 (parse-uint 2))
+(define parse-u32 (parse-uint 3))
+(define parse-u64 (parse-uint 4))
+
+(define parse-i8  (parse-int 1))
+(define parse-i16 (parse-int 2))
+(define parse-i32 (parse-int 3))
+(define parse-i64 (parse-int 4))
