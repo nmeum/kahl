@@ -1,5 +1,5 @@
 ;;> Parses an unsigned integer with a variable-length encoding.
-(define parse-var-uint
+(define parse-uint
   (parse-map
     (parse-seq
       (parse-repeat (parse-pred msb-set?))
@@ -10,9 +10,9 @@
         (bytevector->uint bv)))))
 
 ;;> Parses a signed integer with variable-length encoding.
-(define parse-var-int
+(define parse-int
   (parse-map
-    parse-var-uint
+    parse-uint
     uint->number))
 
 ;;> Parses a BARE boolean value.
@@ -22,33 +22,33 @@
     (lambda (x) (not (zero? x)))))
 
 ;;> Parses an unsigned integer of \var{size} bytes.
-(define (parse-uint size)
+(define (parse-fixed-uint size)
   (parse-map
     (parse-bytevector size)
     (lambda (bv)
       (bytevector->number size bv))))
 
 ;;> Parses a signed integer of \var{size} bytes.
-(define (parse-int size)
+(define (parse-fixed-int size)
   (parse-map
-    (parse-uint size)
+    (parse-fixed-uint size)
     (lambda (n)
       (from-twocomp (* size 8) n))))
 
-(define parse-u8  (parse-uint 1))
-(define parse-u16 (parse-uint 2))
-(define parse-u32 (parse-uint 3))
-(define parse-u64 (parse-uint 4))
+(define parse-u8  (parse-fixed-uint 1))
+(define parse-u16 (parse-fixed-uint 2))
+(define parse-u32 (parse-fixed-uint 3))
+(define parse-u64 (parse-fixed-uint 4))
 
-(define parse-i8  (parse-int 1))
-(define parse-i16 (parse-int 2))
-(define parse-i32 (parse-int 3))
-(define parse-i64 (parse-int 4))
+(define parse-i8  (parse-fixed-int 1))
+(define parse-i16 (parse-fixed-int 2))
+(define parse-i32 (parse-fixed-int 3))
+(define parse-i64 (parse-fixed-int 4))
 
 ;;> Parses a BEAR string.
 (define parse-string
   (parse-with-size-field
-    parse-var-uint
+    parse-uint
     (lambda (size)
       (parse-map
         (parse-bytevector size)
@@ -68,7 +68,7 @@
 (define (parse-mapping key-type val-type)
   (parse-map
     (parse-with-size-field
-      parse-var-uint
+      parse-uint
       (lambda (size)
         (parse-repeat
           (parse-seq key-type val-type)
@@ -81,7 +81,7 @@
 (define (parse-list type . size)
   (if (null? size)
     (parse-with-size-field
-      parse-var-uint
+      parse-uint
       (lambda (size)
         (parse-repeat
           type
@@ -93,7 +93,7 @@
 ;;> to the numeric identifier of a BARE type.
 (define (parse-union type-vector)
   (parse-with-size-field
-    parse-var-uint
+    parse-uint
     (lambda (id)
       ;; TODO: explicitly handle (>= id (vector-length type-vector))
       (vector-ref type-vector id))))
