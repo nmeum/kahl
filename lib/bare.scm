@@ -196,7 +196,7 @@
 (define (parse-union type-vector)
   ;; TODO: Consider using SRFI 113 sets.
   (if (null? type-vector)
-    (error "unions MUST have at least one type")
+    (error "unions must have at least one type")
     (parse-with-context
       parse-uint
       (lambda (id)
