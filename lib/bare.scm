@@ -112,9 +112,12 @@
         utf8->string))))
 
 ;;> Parses arbitrary data with a fixed \var{length} in octets.
-;;> The data must not be greater than 18,446,744,073,709,551,615
-;;> octets in length (the maximum value of a u64). Presently, this
-;;> is not ensured by the current implementation.
+;;> If no \var{length} is given, arbitrary data of a variable
+;;> length in octets is parsed. The data must not be greater
+;;> than 18,446,744,073,709,551,615 octets in length (the
+;;> maximum value of a u64). Presently, this is not ensured by
+;;> the current implementation. The implementation will raise a
+;;> parser construction error if \var{length} is given as zero.
 
 (define (parse-data . length)
   ;; TODO: Ensure that data is not greater than 18,446,744,073,709,551,615 octets in length.
@@ -191,7 +194,8 @@
 ;;> response to the numeric identifier for this type as encoded in the
 ;;> message. A union with a tag value that does not have a corresponding
 ;;> type assigned is considered invalid. A parsing error is raised when
-;;> encountering such a message.
+;;> encountering such a message. A parser construction error is raised
+;;> if \var{type-vector} is null.
 
 (define (parse-union type-vector)
   ;; TODO: Consider using SRFI 113 sets.
@@ -206,7 +210,8 @@
 
 ;;> Parses a set of values of arbitrary types, concatenated in the
 ;;> order given by \var{types}. The result is concatenated to a
-;;> \scheme{vector}.
+;;> \scheme{vector}. A parser construction error is raised if
+;;> \var{types} is not given or null.
 
 (define (parse-struct . types)
   (if (or (null? types)
