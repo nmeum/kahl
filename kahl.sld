@@ -5,7 +5,7 @@
 ;;> \hyperlink[https://datatracker.ietf.org/doc/draft-devault-bare/]{draft-devault-bare-01}
 ;;> before continuing.
 
-;;> The implemented parser combinators are based on modified version of
+;;> The implemented parser combinators are based on a modified version of
 ;;> \hyperlink["https://synthcode.com/scheme/chibi/lib/chibi/parse.html"]{(chibi parse)}
 ;;> the documentation of which may also be consulted for more background information
 ;;> on individual procedures.
