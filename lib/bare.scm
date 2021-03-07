@@ -61,7 +61,10 @@
       parse-uint
       (lambda (size)
         (parse-bytevector size)))
-    (parse-bytevector (car length))))
+    (let ((l (car length)))
+      (if (zero? l)
+        (error "length of fixed-length data must be at least 1")
+        (parse-bytevector l)))))
 
 ;;> Parses an optional value of the combinator.
 (define (parse-optional type)

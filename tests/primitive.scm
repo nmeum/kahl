@@ -33,7 +33,10 @@
 
 (test-group "data<length>"
   (test-parse #u8(1 2 3 4 5) (parse-data 5) #u8(1 2 3 4 5))
-  (test-parse #u8(1) (parse-data 1) #u8(1)))
+  (test-parse #u8(1) (parse-data 1) #u8(1))
+
+  ;; length of fixed-length data must be at least 1
+  (test-error (parse-data 0)))
 
 (test-group "data"
   (test-parse #u8(1 2 3 4 5) (parse-data) #u8(#x05 1 2 3 4 5))
