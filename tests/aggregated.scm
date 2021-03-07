@@ -62,6 +62,12 @@
                 parse-bool)
               #u8(#x01 #xff #x00))
 
+  (test-parse '#("" "")
+              (parse-struct
+                parse-string
+                parse-string)
+              #u8(#x0 #x0))
+
   ;; Structs MUST have at least one field.
   (test-error (parse-struct '()))
   (test-error (parse-struct)))

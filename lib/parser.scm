@@ -220,10 +220,11 @@
 
 (define (parse-bytevector size)
   (parse-map
-    (apply parse-seq
-           (make-list size parse-byte))
+    (parse-seq-list (make-list size parse-byte))
     (lambda (lst)
-      (apply bytevector lst))))
+      (if (zero? size)
+        #u8()
+        (apply bytevector lst)))))
 
 (define (parse-with-context ctx f)
   (define yield (lambda (r s i fk) r))
