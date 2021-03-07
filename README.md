@@ -20,7 +20,7 @@ supported currently:
 * [x] string
 * [x] data<length>
 * [x] data
-* [ ] void
+* [x] void
 * [x] optional<type>
 * [x] [length]type
 * [x] []type

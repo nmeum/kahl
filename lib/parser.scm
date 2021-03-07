@@ -311,3 +311,11 @@
 (define (parse-map f proc)
   (lambda (source index sk fk)
     (f source index (lambda (res s i fk) (sk (proc res) s i fk)) fk)))
+
+;;> Parses the same streams as \var{f} but ignores the result on
+;;> success.  Inside a \scheme{parse-seq} the result will not be
+;;> included in the list of results.  Useful for discarding
+;;> boiler-plate without the need for post-processing results.
+
+(define (parse-ignore f)
+  (parse-map f (lambda (res) ignored-value)))

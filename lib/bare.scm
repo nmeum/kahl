@@ -82,6 +82,10 @@
         (error "length of fixed-length data must be at least 1")
         (parse-bytevector l)))))
 
+;;> Parses a type with zero length.
+(define parse-void
+  (parse-ignore parse-epsilon))
+
 ;;> Parses an optional value of the combinator.
 (define (parse-optional type)
   (parse-with-context
