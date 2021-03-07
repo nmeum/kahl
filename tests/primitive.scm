@@ -1,6 +1,9 @@
 (test-group "uint"
   (test-parse 0   parse-uint #u8(0))
-  (test-parse 300 parse-uint #u8(#xac #x2)))
+  (test-parse 300 parse-uint #u8(#xac #x2))
+
+  (test-parse-error "unexpected eof" parse-uint #u8(#xac))
+  (test-parse-error "unexpected eof" parse-uint #u8(#xac #xac)))
 
 (test-group "int"
   (test-parse 0  parse-int #u8(0))
@@ -13,7 +16,10 @@
   (test-parse 255    parse-u8 #u8(#xff))
   (test-parse 42     parse-u8 #u8(42))
   (test-parse #x4223 parse-u16 #u8(#x23 #x42))
-  (test-parse 65535  parse-u16 #u8(#xff #xff)))
+  (test-parse 65535  parse-u16 #u8(#xff #xff))
+
+  (test-parse-error "unexpected eof" parse-u16 #u8(1))
+  (test-parse-error "unexpected eof" parse-u32 #u8(1 2)))
 
 (test-group "i8, i16, i32, i64"
   (test-parse 126    parse-i8  #u8(#x7e))

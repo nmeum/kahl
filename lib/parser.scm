@@ -108,22 +108,29 @@
         tail)))
 
 ;;> Fill the buffer of the given parse \var{source} with up to
-;;> \var{i} bytes.
+;;> \var{i} bytes. Returns true on success and false on failure.
 
 (define (parse-stream-fill! source i)
   (let ((off (parse-stream-offset source))
         (buf (parse-stream-buffer source)))
     (if (<= off i)
-        (do ((off off (+ off 1)))
-            ((> off i) (parse-stream-offset-set! source off))
-          (bytevector-u8-set! buf off (read-u8 (parse-stream-port source))))
-        #f)))
+      (call-with-current-continuation
+        (lambda (k)
+          (do ((off off (+ off 1)))
+              ((> off i) (parse-stream-offset-set! source off))
+            (let ((byte (read-u8 (parse-stream-port source))))
+              (if (eof-object? byte)
+                (k #f)
+                (bytevector-u8-set! buf off byte))))))
+        #t)))
 
-;;> Returns the byte in parse stream \var{source} indexed by \var{i}.
+;;> Returns the byte in parse stream \var{source} indexed by \var{i}
+;;> or false on EOF.
 
 (define (parse-stream-ref source i)
-  (parse-stream-fill! source i)
-  (bytevector-u8-ref (parse-stream-buffer source) i))
+  (if (parse-stream-fill! source i)
+    (bytevector-u8-ref (parse-stream-buffer source) i)
+    #f))
 
 ;;> Return last byte in parse stream \var{source}.
 
@@ -202,12 +209,14 @@
 (define (parse-pred pred)
   (lambda (source index sk fk)
     (let ((byte (parse-stream-ref source index)))
-      (if (pred byte)
-          (sk byte
-              (parse-stream-next-source source index)
-              (parse-stream-next-index source index)
-              fk)
-          (fk source index "failed predicate")))))
+      (if byte
+        (if (pred byte)
+            (sk byte
+                (parse-stream-next-source source index)
+                (parse-stream-next-index source index)
+                fk)
+            (fk source index "failed predicate"))
+        (fk source index "unexpected eof")))))
 
 ;;> Parse next byte.
 
