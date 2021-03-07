@@ -4,7 +4,11 @@ Implementation of [BARE][bare web] in R⁷RS scheme.
 
 ## Status
 
-Work in progress, not really usable currently. Features implemented:
+This started us as a nice demo for a binary parser combinator library
+based on [`(chibi parse)`][chibi parse] which I had lying around from a
+previous Scheme project I never finished. This is currently work
+progress and not sufficiently tested, the following BARE data types are
+supported currently:
 
 * [x] uint
 * [x] int
@@ -47,3 +51,4 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 [bare web]: https://baremessages.org/
+[chibi parse]: https://synthcode.com/scheme/chibi/lib/chibi/parse.html
