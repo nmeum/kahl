@@ -21,8 +21,9 @@
                (with-exception-handler
                  (lambda (e) (k e))
                  (lambda ( ) (k (%test-parse parser bv))))))))
-    (if (error-object? r)
-      (error-object-message r)))) ;; (not (error-object? r)) → undefined
+    (test expected
+      (if (error-object? r)
+        (error-object-message r))))) ;; (not (error-object? r)) → undefined
 
 (test-group "primitive"
   (include "tests/primitive.scm"))

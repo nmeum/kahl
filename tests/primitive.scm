@@ -2,8 +2,8 @@
   (test-parse 0   parse-uint #u8(0))
   (test-parse 300 parse-uint #u8(#xac #x2))
 
-  (test-parse-error "unexpected eof" parse-uint #u8(#xac))
-  (test-parse-error "unexpected eof" parse-uint #u8(#xac #xac)))
+  (test-parse-error "failed predicate" parse-uint #u8(#xac))
+  (test-parse-error "failed predicate" parse-uint #u8(#xac #xac)))
 
 (test-group "int"
   (test-parse 0  parse-int #u8(0))

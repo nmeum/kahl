@@ -2,8 +2,9 @@
 (define parse-uint
   (parse-map
     (parse-seq
+      ;; Each octet has MSB set, except the last one.
       (parse-repeat (parse-pred msb-set?))
-      parse-byte) ;; Each octet has MSB set, except the last one.
+      (parse-pred (lambda (x) (not (msb-set? x)))))
     (lambda (lst)
       (let* ((join (append (car lst) (cdr lst)))
              (bv   (apply bytevector join)))
