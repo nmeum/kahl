@@ -2,31 +2,22 @@
 
 Implementation of [BARE][bare web] in R⁷RS scheme.
 
-## Status
+## Motivation
 
 This started us as a nice demo for a binary parser combinator library
 based on [`(chibi parse)`][chibi parse] which I had lying around from a
-previous Scheme project I never finished. This is currently work
-progress and not sufficiently tested, the following BARE data types are
-supported currently:
+previous Scheme project I never finished. By providing parser
+combinators for BARE, this library allows application developers to
+follow [langsec][langsec web] patterns for [secure input handling][bratus parser].
 
-* [x] uint
-* [x] int
-* [x] u8, u16, u32, u64
-* [x] i8, i16, i32, i64
-* [ ] f32, f64
-* [x] bool
-* [x] enum
-* [x] string
-* [x] data<length>
-* [x] data
-* [x] void
-* [x] optional<type>
-* [x] [length]type
-* [x] []type
-* [x] map[type A]type B
-* [x] (type | type | ...)
-* [x] struct
+## Status
+
+Except floating-point numbers (`f32` and `f64`), all types from
+[`draft-devault-bare-01`][draft-devault-bare-01] are supported
+currently. The BARE schema language is currently not supported, but may
+be supported in future version of this library. Additionally, this
+hasn't been tested extensively yet and the API may still be subject to
+change.
 
 ## Limitations
 
@@ -52,3 +43,6 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 [bare web]: https://baremessages.org/
 [chibi parse]: https://synthcode.com/scheme/chibi/lib/chibi/parse.html
+[draft-devault-bare-01]: https://datatracker.ietf.org/doc/html/draft-devault-bare-01
+[langsec web]: https://langsec.org/
+[bratus parser]: https://www.usenix.org/publications/login/spring2017/bratus
