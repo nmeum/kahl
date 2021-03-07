@@ -237,39 +237,44 @@
         ((f size) source field-start sk fk)
         (fk source index "expected field of given size")))))
 
+;;> TODO.
+
+(define ignored-value (list 'ignore))
+
+;;> TODO.
+
+(define (parse-seq-list o)
+  (cond
+   ((null? o)
+    parse-epsilon)
+   ((null? (cdr o))
+    (let ((f (car o)))
+      (lambda (s i sk fk)
+        (f s i (lambda (r s i fk) (sk (list r) s i fk)) fk))))
+   (else
+    (let* ((f (car o))
+           (o (cdr o))
+           (g (car o))
+           (o (cdr o))
+           (g (if (pair? o)
+                  (apply parse-seq g o)
+                  (lambda (s i sk fk)
+                    (g s i (lambda (r s i fk) (sk (list r) s i fk)) fk)))))
+      (lambda (source index sk fk)
+        (f source
+           index
+           (lambda (r s i fk)
+             (g s i (lambda (r2 s i fk)
+                      (let ((r2 (if (eq? r ignored-value) r2 (cons r r2))))
+                        (sk r2 s i fk)))
+                fk))
+           fk))))))
+
 ;;> The sequence combinator. Each combinator is applied in turn just
 ;;> past the position of the previous. If all succeed, returns a list
 ;;> of the results in order, skipping any ignored values.
 
 (define (parse-seq . o)
-  (define ignored-value (list 'ignore))
-  (define (parse-seq-list o)
-    (cond
-     ((null? o)
-      parse-epsilon)
-     ((null? (cdr o))
-      (let ((f (car o)))
-        (lambda (s i sk fk)
-          (f s i (lambda (r s i fk) (sk (list r) s i fk)) fk))))
-     (else
-      (let* ((f (car o))
-             (o (cdr o))
-             (g (car o))
-             (o (cdr o))
-             (g (if (pair? o)
-                    (apply parse-seq g o)
-                    (lambda (s i sk fk)
-                      (g s i (lambda (r s i fk) (sk (list r) s i fk)) fk)))))
-        (lambda (source index sk fk)
-          (f source
-             index
-             (lambda (r s i fk)
-               (g s i (lambda (r2 s i fk)
-                        (let ((r2 (if (eq? r ignored-value) r2 (cons r r2))))
-                          (sk r2 s i fk)))
-                  fk))
-             fk))))))
-
   (parse-seq-list o))
 
 ;;> The repetition combinator.  Parse \var{f} repeatedly and return a

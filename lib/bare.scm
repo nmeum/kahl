@@ -116,4 +116,8 @@
 
 ;;> Parses a BARE struct. Each comibinator in \var{types} is invoked
 ;;> sequentially.
-(define parse-struct parse-seq) ;; TODO: Consider returning vector.
+(define (parse-struct . o)
+  (if (or (null? o)
+          (null? (car o)))
+    (error "structs must have at least one field")
+    (parse-seq-list o)))

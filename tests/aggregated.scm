@@ -56,4 +56,8 @@
                 parse-bool
                 parse-u8
                 parse-bool)
-              #u8(#x01 #xff #x00)))
+              #u8(#x01 #xff #x00))
+
+  ;; Structs MUST have at least one field.
+  (test-error (parse-struct '()))
+  (test-error (parse-struct)))
