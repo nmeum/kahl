@@ -21,7 +21,7 @@ change.
 
 ## Documentation
 
-This file is documented using Scheme Scribble syntax as implemented by
+This library is documented using Scheme Scribble syntax as implemented by
 [chibi scribble][chibi scribble]. Documentation can be generated using
 `chibi-doc(1)`. To generate HTML documentation run:
 
