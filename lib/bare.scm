@@ -127,6 +127,7 @@
 ;;> that is a vector of combinators where each vector index reponse
 ;;> to the numeric identifier of a BARE type.
 (define (parse-union type-vector)
+  ;; TODO: Consider using SRFI 113 sets.
   (if (null? type-vector)
     (error "unions MUST have at least one type")
     (parse-with-context
