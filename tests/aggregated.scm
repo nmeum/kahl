@@ -48,7 +48,10 @@
     "unexpected tag in tagged union"
     (parse-union
       (vector parse-u8 parse-u8))
-    #u8(#x02 #x23 #x42)))
+    #u8(#x02 #x23 #x42))
+
+  ;; unions must have at least one type
+  (test-error (parse-union '())))
 
 (test-group "struct"
   (test-parse '#(#t #xff #f)

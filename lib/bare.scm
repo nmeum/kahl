@@ -107,12 +107,14 @@
 ;;> that is a vector of combinators where each vector index reponse
 ;;> to the numeric identifier of a BARE type.
 (define (parse-union type-vector)
-  (parse-with-size-field
-    parse-uint
-    (lambda (id)
-      (if (>= id (vector-length type-vector))
-        (parse-fail "unexpected tag in tagged union")
-        (vector-ref type-vector id)))))
+  (if (null? type-vector)
+    (error "unions MUST have at least one type")
+    (parse-with-size-field
+      parse-uint
+      (lambda (id)
+        (if (>= id (vector-length type-vector))
+          (parse-fail "unexpected tag in tagged union")
+          (vector-ref type-vector id))))))
 
 ;;> Parses a BARE struct. Each comibinator in \var{types} is invoked
 ;;> sequentially.
