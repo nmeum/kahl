@@ -42,10 +42,11 @@
                 ))
               #u8(#x01 #x12 #x13))
 
-  (test-parse #f
-              (parse-union
-                (vector parse-u8 parse-u8))
-              #u8(#x02 #x23 #x42)))
+  (test-parse-error
+    "unexpected tag in tagged union"
+    (parse-union
+      (vector parse-u8 parse-u8))
+    #u8(#x02 #x23 #x42)))
 
 (test-group "struct"
   (test-parse '(#t #xff #f)
