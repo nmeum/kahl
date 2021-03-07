@@ -12,9 +12,9 @@ follow [langsec][langsec web] patterns for [secure input handling][bratus parser
 
 ## Status
 
-Except floating-point numbers (`f32` and `f64`), all types from
-[`draft-devault-bare-01`][draft-devault-bare-01] are supported
-currently. The BARE schema language is currently not supported, but may
+With the exception of floating-point numbers (`f32` and `f64`), all
+types from [`draft-devault-bare-01`][draft-devault-bare-01] are
+supported. The BARE schema language is currently not supported, but may
 be supported in future version of this library. Additionally, this
 hasn't been tested extensively yet and the API may still be subject to
 change.
