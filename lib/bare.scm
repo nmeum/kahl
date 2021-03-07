@@ -104,8 +104,9 @@
   (parse-with-size-field
     parse-uint
     (lambda (id)
-      ;; TODO: explicitly handle (>= id (vector-length type-vector))
-      (vector-ref type-vector id))))
+      (if (>= id (vector-length type-vector))
+        (parse-fail "unexpected tag in tagged union")
+        (vector-ref type-vector id)))))
 
 ;;> Parses a BARE struct. Each comibinator in \var{types} is invoked
 ;;> sequentially.

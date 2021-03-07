@@ -191,6 +191,12 @@
   (lambda (source index sk fk)
     (sk #t source index fk)))
 
+;;> Always fails to parse with \var{msg}.
+
+(define (parse-fail msg)
+  (lambda (source index sk fk)
+    (fk source index "unexpected tag in tagged union")))
+
 ;;> Parse byte if it statifies the predicate \var{pred}, fail otherwise.
 
 (define (parse-pred pred)
