@@ -8,5 +8,6 @@
           parse-mapping parse-list parse-union parse-struct)
 
   (include "lib/util.scm"
+           "lib/convert.scm"
            "lib/parser.scm"
            "lib/bare.scm"))

@@ -39,19 +39,3 @@
   (if (zero? (bytevector-length bv))
     seed
     (%bytevector-fold-right 0)))
-
-;;> Parses a number in two's complete representation.
-(define (from-twocomp numbits input)
-  (let ((mask (expt 2 (- numbits 1))))
-    (+ (* -1 (bitwise-and input mask))
-       (bitwise-and input (bitwise-not mask)))))
-
-;;> Converts a little-endian number representable in \var{size} bits.
-(define (bytevector->number size bv)
-  (let ((shift-proc (lambda (idx) (* idx 8))))
-    (apply bitwise-ior
-           (map (lambda (index)
-                   (arithmetic-shift
-                     (bytevector-u8-ref bv index)
-                     (shift-proc index)))
-                (range size)))))
