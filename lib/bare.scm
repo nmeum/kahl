@@ -90,15 +90,18 @@
 ;;> Parses a list of \var{size} values of \var{type}. If no \var{size}
 ;;> was specified, this combinator parser a variable-length list of
 ;;> values.
-(define (parse-list type . size)
-  (if (null? size)
+(define (parse-list type . length)
+  (if (null? length)
     (parse-with-size-field
       parse-uint
       (lambda (size)
         (parse-repeat
           type
           size size)))
-    (parse-repeat type (car size) (car size))))
+    (let ((l (car length)))
+      (if (zero? l)
+        (error "length of fixed-length arrays must be at least 1")
+        (parse-repeat type l l)))))
 
 ;;> Parses a tagged union. This combinator takes a \var{type-vector},
 ;;> that is a vector of combinators where each vector index reponse

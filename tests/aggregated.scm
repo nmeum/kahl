@@ -11,11 +11,13 @@
               (parse-mapping parse-u16 parse-u32)
               #u8(#x0)))
 
-(test-group "parse []type"
-  (test-parse '() (parse-list parse-u32 0) #u8())
+(test-group "parse [length]type"
   (test-parse '(#x23 #x42)
               (parse-list parse-u8 2)
-              #u8(#x23 #x42)))
+              #u8(#x23 #x42))
+
+  ;; length of fixed-length array must be at least 1
+  (test-error (parse-list parse-u8 0)))
 
 (test-group "[]type"
   (test-parse '(#x05 #x15)
