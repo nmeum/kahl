@@ -35,6 +35,17 @@
   (test-parse #t parse-bool #u8(1))
   (test-parse #t parse-bool #u8(#xff)))
 
+(test-group "enum"
+  (test-parse 42 (parse-enum '(23 42 1337)) #u8(42))
+  (test-parse-error "enum value not part of given list"
+                    (parse-enum '(42 23)) #u8(5))
+
+  ;; enum value list must be non-empty
+  (test-error (parse-enum '()))
+
+  ;; enum values must be inuque
+  (test-error (parse-enum '(23 23))))
+
 (test-group "string"
   (test-parse "foo" parse-string
               (bytevector-append

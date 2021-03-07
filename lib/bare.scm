@@ -23,6 +23,20 @@
     parse-byte
     (lambda (x) (not (zero? x)))))
 
+;;> Parses a BARE enum value from the given list of \var{values}.
+(define (parse-enum values)
+  ;; TODO: Consider using SRFI 113 sets.
+  (if (or (null? values) (not (lset-unique? values)))
+    (error "enum must be a non-empty list of unique values")
+    (parse-with-context
+      parse-uint
+      (lambda (v)
+        (lambda (source index sk fk)
+          ;; Comparing numbers → eqv? (memv) should suffice
+          (if (memv v values)
+            (sk v source index fk)
+            (fk source index "enum value not part of given list")))))))
+
 ;;> Parses an unsigned integer of \var{size} bytes.
 (define (parse-fixed-uint size)
   (parse-map

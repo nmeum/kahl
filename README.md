@@ -16,7 +16,7 @@ supported currently:
 * [x] i8, i16, i32, i64
 * [ ] f32, f64
 * [x] bool
-* [ ] enum
+* [x] enum
 * [x] string
 * [x] data<length>
 * [x] data

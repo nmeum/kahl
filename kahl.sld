@@ -6,7 +6,7 @@
           parse-u32 parse-u64 parse-i8 parse-i16 parse-i32
           parse-i64 parse-bool parse-string parse-optional
           parse-mapping parse-list parse-union parse-struct
-          parse-data)
+          parse-data parse-enum)
 
   (include "lib/util.scm"
            "lib/convert.scm"

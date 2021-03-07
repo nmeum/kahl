@@ -39,3 +39,15 @@
   (if (zero? (bytevector-length bv))
     seed
     (%bytevector-fold-right 0)))
+
+;;> Check if a list only contains unique values.
+(define (lset-unique? lset)
+  (call-with-current-continuation
+    (lambda (k)
+      (letrec ((proc (lambda (l)
+                       (if (null? l)
+                         #t
+                         (if (memv (car l) (cdr l))
+                           (k #f)
+                           (proc (cdr l)))))))
+        (k (proc lset))))))
