@@ -10,7 +10,5 @@
 
   (test expected (%test-parse parser bv)))
 
-(include "tests/integer.scm"
-         "tests/boolean.scm"
-         "tests/string.scm"
+(include "tests/primitive.scm"
          "tests/aggregated.scm")

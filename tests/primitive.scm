@@ -19,3 +19,14 @@
     (test-parse -1 parse-var-int #u8(1))
     (test-parse 1  parse-var-int #u8(2))
     (test-parse -2 parse-var-int #u8(3))))
+
+(test-group "parse boolean values"
+  (test-parse #f parse-bool #u8(0))
+  (test-parse #t parse-bool #u8(1))
+  (test-parse #t parse-bool #u8(#xff)))
+
+(test-group "string"
+  (test-parse "foo" parse-string
+              (bytevector-append
+                #u8(3)
+                (string->utf8 "foo"))))
