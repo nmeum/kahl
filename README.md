@@ -19,6 +19,19 @@ be supported in future version of this library. Additionally, this
 hasn't been tested extensively yet and the API may still be subject to
 change.
 
+## Documentation
+
+This file is documented using Scheme Scribble syntax as implemented by
+[chibi scribble][chibi scribble]. Documentation can be generated using
+`chibi-doc(1)`. To generate HTML documentation run:
+
+	$ chibi-doc kahl > kahl.html
+
+If you want to improve the existing documentation, take a look at the
+[Scribble quick start guide][racket scribble]. Commands supported in the
+default Chibi-Scheme doc environment can be obtained by importing
+[`(chibi doc)`][chibi doc] and running `(make-default-doc-env)`.
+
 ## Limitations
 
 * Since this is a parser combinator library it is not possible to
@@ -46,3 +59,6 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 [draft-devault-bare-01]: https://datatracker.ietf.org/doc/html/draft-devault-bare-01
 [langsec web]: https://langsec.org/
 [bratus parser]: https://www.usenix.org/publications/login/spring2017/bratus
+[chibi scribble]: https://synthcode.com/scheme/chibi/lib/chibi/scribble.html
+[racket scribble]: https://docs.racket-lang.org/scribble/getting-started.html
+[chibi doc]: https://synthcode.com/scheme/chibi/lib/chibi/doc.html
