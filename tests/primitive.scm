@@ -30,3 +30,11 @@
               (bytevector-append
                 #u8(3)
                 (string->utf8 "foo"))))
+
+(test-group "data<length>"
+  (test-parse #u8(1 2 3 4 5) (parse-data 5) #u8(1 2 3 4 5))
+  (test-parse #u8(1) (parse-data 1) #u8(1)))
+
+(test-group "data"
+  (test-parse #u8(1 2 3 4 5) (parse-data) #u8(#x05 1 2 3 4 5))
+  (test-parse #u8(#x23) (parse-data) #u8(1 #x23)))

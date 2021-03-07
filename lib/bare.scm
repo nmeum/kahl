@@ -54,6 +54,15 @@
         (parse-bytevector size)
         utf8->string))))
 
+;;> Parses BARE data.
+(define (parse-data . length)
+  (if (null? length)
+    (parse-with-size-field
+      parse-uint
+      (lambda (size)
+        (parse-bytevector size)))
+    (parse-bytevector (car length))))
+
 ;;> Parses an optional value of the combinator.
 (define (parse-optional type)
   (parse-with-size-field

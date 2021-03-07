@@ -14,8 +14,8 @@ Work in progress, not really usable currently. Features implemented:
 * [x] bool
 * [ ] enum
 * [x] string
-* [ ] data<length>
-* [ ] data
+* [x] data<length>
+* [x] data
 * [ ] void
 * [x] optional<type>
 * [x] [length]type
