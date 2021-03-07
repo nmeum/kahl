@@ -24,6 +24,13 @@ Work in progress, not really usable currently. Features implemented:
 * [x] (type | type | ...)
 * [x] struct
 
+## Limitations
+
+* Since this is a parser combinator library it is not possible to
+  satisfy BARE invariants regarding types during parser construction.
+  For instance, it cannot be guaranteed that only primitive non-data
+  types are used as map keys. This is the callers responsibility.
+
 ## License
 
 This program is free software: you can redistribute it and/or modify
