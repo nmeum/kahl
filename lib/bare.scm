@@ -120,4 +120,6 @@
   (if (or (null? o)
           (null? (car o)))
     (error "structs must have at least one field")
-    (parse-seq-list o)))
+    (parse-map
+      (parse-seq-list o)
+      list->vector)))

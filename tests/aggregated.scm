@@ -51,7 +51,7 @@
     #u8(#x02 #x23 #x42)))
 
 (test-group "struct"
-  (test-parse '(#t #xff #f)
+  (test-parse '#(#t #xff #f)
               (parse-struct
                 parse-bool
                 parse-u8
