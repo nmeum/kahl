@@ -8,6 +8,7 @@
 ;;> the precision is currently not.
 
 (define parse-uint
+  ;; TODO: Limit precision to 64-bit.
   (parse-map
     (parse-seq
       ;; Each octet has MSB set, except the last one.
