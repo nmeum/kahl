@@ -47,7 +47,7 @@
 
 ;;> Parses a BEAR string.
 (define parse-string
-  (parse-with-size-field
+  (parse-with-context
     parse-uint
     (lambda (size)
       (parse-map
@@ -57,7 +57,7 @@
 ;;> Parses BARE data.
 (define (parse-data . length)
   (if (null? length)
-    (parse-with-size-field
+    (parse-with-context
       parse-uint
       (lambda (size)
         (parse-bytevector size)))
@@ -68,10 +68,10 @@
 
 ;;> Parses an optional value of the combinator.
 (define (parse-optional type)
-  (parse-with-size-field
+  (parse-with-context
     parse-u8
-    (lambda (size)
-      (if (zero? size)
+    (lambda (opt)
+      (if (zero? opt)
         parse-epsilon
         type))))
 
@@ -79,7 +79,7 @@
 ;;> values of type \var{val-type}.
 (define (parse-mapping key-type val-type)
   (parse-map
-    (parse-with-size-field
+    (parse-with-context
       parse-uint
       (lambda (size)
         (parse-repeat
@@ -92,7 +92,7 @@
 ;;> values.
 (define (parse-list type . length)
   (if (null? length)
-    (parse-with-size-field
+    (parse-with-context
       parse-uint
       (lambda (size)
         (parse-repeat
@@ -109,7 +109,7 @@
 (define (parse-union type-vector)
   (if (null? type-vector)
     (error "unions MUST have at least one type")
-    (parse-with-size-field
+    (parse-with-context
       parse-uint
       (lambda (id)
         (if (>= id (vector-length type-vector))

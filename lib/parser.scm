@@ -226,12 +226,12 @@
 
 ;;> TODO.
 
-(define (parse-with-size-field size-field f)
+(define (parse-with-context ctx f)
   (define yield (lambda (r s i fk) r))
 
   (lambda (source index sk fk)
     ;; call-with-parse modifies source and needs to be called first.
-    (let* ((size (call-with-parse size-field source index yield fk))
+    (let* ((size (call-with-parse ctx source index yield fk))
            (field-start (parse-stream-offset source)))
       (if size
         ((f size) source field-start sk fk)
