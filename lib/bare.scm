@@ -3,7 +3,8 @@
   (parse-map
     (parse-seq
       ;; Each octet has MSB set, except the last one.
-      (parse-repeat (parse-pred msb-set?))
+      ;; A maximum of 10 octets can be passed, i.e. 9 with MSB set and one without.
+      (parse-repeat (parse-pred msb-set?) 0 9)
       (parse-pred (lambda (x) (not (msb-set? x)))))
     (lambda (lst)
       (let* ((join (append (car lst) (cdr lst)))

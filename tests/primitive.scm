@@ -2,6 +2,11 @@
   (test-parse 0   parse-uint #u8(0))
   (test-parse 300 parse-uint #u8(#xac #x2))
 
+  (test-parse 21642243047108056620 parse-uint
+              #u8(#xac #xac #xac #xac #xac #xac #xac #xac #xac #x2))
+  (test-parse-error "failed predicate" parse-uint
+              #u8(#xac #xac #xac #xac #xac #xac #xac #xac #xac #xac #x2))
+
   (test-parse-error "failed predicate" parse-uint #u8(#xac))
   (test-parse-error "failed predicate" parse-uint #u8(#xac #xac)))
 
