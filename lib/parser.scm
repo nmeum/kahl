@@ -107,8 +107,9 @@
         (%parse-stream-tail-set! source tail)
         tail)))
 
-;;> Fill the buffer of the given parse \var{source} with up to
-;;> \var{i} bytes. Returns true on success and false on failure.
+;; Fill the buffer of the given parse \var{source} with up to
+;; \var{i} bytes. Returns \scheme{#t} on success and \scheme{#f}
+;; on failure.
 
 (define (parse-stream-fill! source i)
   (let ((off (parse-stream-offset source))
@@ -124,15 +125,10 @@
                 (bytevector-u8-set! buf off byte))))))
         #t)))
 
-;;> Returns the byte in parse stream \var{source} indexed by \var{i}
-;;> or false on EOF.
-
 (define (parse-stream-ref source i)
   (if (parse-stream-fill! source i)
     (bytevector-u8-ref (parse-stream-buffer source) i)
     #f))
-
-;;> Return last byte in parse stream \var{source}.
 
 (define (parse-stream-last-byte source)
   (let ((buf (parse-stream-buffer source)))
@@ -145,14 +141,10 @@
                 (lp (- i 1))
                 ch))))))
 
-;;> TODO.
-
 (define (parse-stream-next-source source i)
   (if (>= (+ i 1) (bytevector-length (parse-stream-buffer source)))
       (parse-stream-tail source)
       source))
-
-;;> TODO.
 
 (define (parse-stream-next-index source i)
   (if (>= (+ i 1) (bytevector-length (parse-stream-buffer source)))
@@ -190,21 +182,21 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;> \section{Constant Parsers}
+;; \section{Constant Parsers}
 
-;;> Parse nothing successfully.
+;; Parse nothing successfully.
 
 (define parse-epsilon
   (lambda (source index sk fk)
     (sk #t source index fk)))
 
-;;> Always fails to parse with \var{msg}.
+;; Always fails to parse with \var{msg}.
 
 (define (parse-fail msg)
   (lambda (source index sk fk)
-    (fk source index "unexpected tag in tagged union")))
+    (fk source index msg)))
 
-;;> Parse byte if it statifies the predicate \var{pred}, fail otherwise.
+;; Parse byte if it statifies the predicate \var{pred}, fail otherwise.
 
 (define (parse-pred pred)
   (lambda (source index sk fk)
@@ -218,13 +210,13 @@
             (fk source index "failed predicate"))
         (fk source index "unexpected eof")))))
 
-;;> Parse next byte.
+;; Parse next byte.
 
 (define parse-byte
   (parse-pred (lambda (x) #t)))
 
-;;> Parse bytevector of the given \var{size} in bytes. Returns a
-;;> bytevector of the given size, not a list.
+;; Parse bytevector of the given \var{size} in bytes. Returns a
+;; bytevector of the given size, not a list.
 
 (define (parse-bytevector size)
   (parse-map
@@ -232,8 +224,6 @@
            (make-list size parse-byte))
     (lambda (lst)
       (apply bytevector lst))))
-
-;;> TODO.
 
 (define (parse-with-context ctx f)
   (define yield (lambda (r s i fk) r))
@@ -246,11 +236,7 @@
         ((f size) source field-start sk fk)
         (fk source index "expected field of given size")))))
 
-;;> TODO.
-
 (define ignored-value (list 'ignore))
-
-;;> TODO.
 
 (define (parse-seq-list o)
   (cond
@@ -279,17 +265,17 @@
                 fk))
            fk))))))
 
-;;> The sequence combinator. Each combinator is applied in turn just
-;;> past the position of the previous. If all succeed, returns a list
-;;> of the results in order, skipping any ignored values.
+;; The sequence combinator. Each combinator is applied in turn just
+;; past the position of the previous. If all succeed, returns a list
+;; of the results in order, skipping any ignored values.
 
 (define (parse-seq . o)
   (parse-seq-list o))
 
-;;> The repetition combinator.  Parse \var{f} repeatedly and return a
-;;> list of the results.  \var{lo} is the minimum number of parses
-;;> (deafult 0) to be considered a successful parse, and \var{hi} is
-;;> the maximum number (default infinite) before stopping.
+;; The repetition combinator.  Parse \var{f} repeatedly and return a
+;; list of the results.  \var{lo} is the minimum number of parses
+;; (deafult 0) to be considered a successful parse, and \var{hi} is
+;; the maximum number (default infinite) before stopping.
 
 (define (parse-repeat f . o)
   (let ((lo (if (pair? o) (car o) 0))
@@ -306,16 +292,16 @@
                  (lambda (r s i fk) (repeat s i fk (+ j 1) (cons r res)))
                  fk)))))))
 
-;;> Parse \var{f} and apply the procedure \var{proc} to the result on success.
+;; Parse \var{f} and apply the procedure \var{proc} to the result on success.
 
 (define (parse-map f proc)
   (lambda (source index sk fk)
     (f source index (lambda (res s i fk) (sk (proc res) s i fk)) fk)))
 
-;;> Parses the same streams as \var{f} but ignores the result on
-;;> success.  Inside a \scheme{parse-seq} the result will not be
-;;> included in the list of results.  Useful for discarding
-;;> boiler-plate without the need for post-processing results.
+;; Parses the same streams as \var{f} but ignores the result on
+;; success.  Inside a \scheme{parse-seq} the result will not be
+;; included in the list of results.  Useful for discarding
+;; boiler-plate without the need for post-processing results.
 
 (define (parse-ignore f)
   (parse-map f (lambda (res) ignored-value)))

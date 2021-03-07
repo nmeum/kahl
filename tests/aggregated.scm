@@ -1,7 +1,8 @@
 (test-group "optional<type>"
   (test-parse #t (parse-optional parse-u8) #u8(0))
   (test-parse 23 (parse-optional parse-u8) #u8(1 23))
-  (test-parse 42 (parse-optional parse-u8) #u8(23 42)))
+  (test-parse-error "invalid option value"
+                    (parse-optional parse-u8) #u8(23 42)))
 
 (test-group "map[type A]type B"
   (test-parse '((5 6) (35 2))

@@ -7,14 +7,12 @@
 (define (lsb-set? i) (bit-set? lsb i))
 (define (msb-set? i) (bit-set? msb i))
 
-;;> Creates a list of the length given by \var{upto}.
 (define (range upto)
   (if (zero? upto)
     '()
     (let ((i (dec upto)))
       (append (range i) (list i)))))
 
-;;> Like \var{fold} from SRFI 1, but for bytevectors.
 (define (bytevector-fold proc seed bv)
   (define (%bytevector-fold n)
     (if (zero? n)
@@ -28,7 +26,6 @@
       seed
       (%bytevector-fold len))))
 
-;;> Like \var{fold-right} from SRFI 1, but for bytevectors.
 (define (bytevector-fold-right proc seed bv)
   (define (%bytevector-fold-right n)
     (if (>= n (bytevector-length bv))
@@ -40,7 +37,6 @@
     seed
     (%bytevector-fold-right 0)))
 
-;;> Check if a list only contains unique values.
 (define (lset-unique? lset)
   (call-with-current-continuation
     (lambda (k)

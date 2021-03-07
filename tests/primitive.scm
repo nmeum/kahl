@@ -33,7 +33,9 @@
 (test-group "bool"
   (test-parse #f parse-bool #u8(0))
   (test-parse #t parse-bool #u8(1))
-  (test-parse #t parse-bool #u8(#xff)))
+
+  (test-parse-error "invalid boolean value"
+                    parse-bool #u8(#xff)))
 
 (test-group "enum"
   (test-parse 42 (parse-enum '(23 42 1337)) #u8(42))
