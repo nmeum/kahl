@@ -24,5 +24,7 @@
     (if (error-object? r)
       (error-object-message r)))) ;; (not (error-object? r)) → undefined
 
-(include "tests/primitive.scm"
-         "tests/aggregated.scm")
+(test-group "primitive"
+  (include "tests/primitive.scm"))
+(test-group "aggregated"
+  (include "tests/aggregated.scm"))
