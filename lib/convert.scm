@@ -27,6 +27,6 @@
 
 (define (uint->number n)
   (let ((x (arithmetic-shift n -1)))
-    (if (zero? (first-set-bit n))
+    (if (not (zero? (bitwise-and n 1)))
       (bitwise-eqv x)
       x)))

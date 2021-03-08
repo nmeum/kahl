@@ -44,23 +44,23 @@
 
 (define parse-u8  (parse-fixed-uint 1))
 (define parse-u16 (parse-fixed-uint 2))
-(define parse-u32 (parse-fixed-uint 3))
+(define parse-u32 (parse-fixed-uint 4))
 
 ;;> Parses unsigned integers of a fixed precision, respectively
 ;;> 8, 16, 32, 64 bits. The result is converted to a Scheme
 ;;> \scheme{number} in host byte order.
 
-(define parse-u64 (parse-fixed-uint 4))
+(define parse-u64 (parse-fixed-uint 8))
 
 (define parse-i8  (parse-fixed-int 1))
 (define parse-i16 (parse-fixed-int 2))
-(define parse-i32 (parse-fixed-int 3))
+(define parse-i32 (parse-fixed-int 4))
 
 ;;> Parses signed integers of a fixed precision, respectively
 ;;> 8, 16, 32, 64 bits. The result is converted to a Scheme
 ;;> \scheme{number} in host byte order.
 
-(define parse-i64 (parse-fixed-int 4))
+(define parse-i64 (parse-fixed-int 8))
 
 ;;> Parses a boolean value, either \scheme{#t} or \scheme{#f}.
 ;;> If a value other than one or zero is found in the u8

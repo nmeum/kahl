@@ -28,7 +28,9 @@
 
 (test-group "i8, i16, i32, i64"
   (test-parse 126    parse-i8  #u8(#x7e))
-  (test-parse -128   parse-i8  #u8(#x80)))
+  (test-parse -128   parse-i8  #u8(#x80))
+
+  (test-parse 4242424242 parse-i64 #u8(#xb2 #x41 #xde #xfc #x00 #x00 #x00 #x00)))
 
 (test-group "bool"
   (test-parse #f parse-bool #u8(0))
