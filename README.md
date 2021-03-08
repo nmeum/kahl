@@ -19,6 +19,41 @@ be supported in future version of this library. Additionally, this
 hasn't been tested extensively yet and the API may still be subject to
 change.
 
+## Example
+
+Consider the following [BARE schema][bare schema] definition:
+
+	type Customer {
+		name: string
+		email: string
+		address: Address
+		orders: []{
+			orderId: i64
+			quantity: i32
+		}
+	}
+
+Messages of this type can be parsed using the following Scheme code:
+
+	(import (kahl))
+
+	;; Define a parser for the Customer type.
+	(define parse-customer
+	  (parse-struct
+	    parse-string ;; name
+	    parse-string ;; email
+	    (parse-list  ;; orders
+	      (parse-struct
+	        parse-i64
+	        parse-i32))))
+
+	;; Create a parse stream for the file customer.bin
+	;; and use the parse-customer parser to parse it.
+	(let ((s make-parse-stream "customer.bin"))
+	  (parse parse-customer s))
+
+Refer to the documentation for more information on individual procedures.
+
 ## Documentation
 
 This library is documented using Scheme Scribble syntax as implemented by
@@ -57,6 +92,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 [bare web]: https://baremessages.org/
 [chibi parse]: https://synthcode.com/scheme/chibi/lib/chibi/parse.html
 [draft-devault-bare-01]: https://datatracker.ietf.org/doc/html/draft-devault-bare-01
+[bare schema]: https://datatracker.ietf.org/doc/html/draft-devault-bare-01#section-3
 [langsec web]: https://langsec.org/
 [bratus parser]: https://www.usenix.org/publications/login/spring2017/bratus
 [chibi scribble]: https://synthcode.com/scheme/chibi/lib/chibi/scribble.html
