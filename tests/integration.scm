@@ -45,3 +45,6 @@
        #t                          ;; publicKey
        ())                         ;; metadata
     e))
+
+(test-group "terminated.bin"
+  (test 'void (parse-file parse-person "./tests/test-vectors/terminated.bin")))
