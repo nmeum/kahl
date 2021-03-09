@@ -27,3 +27,21 @@
 
   ;; Metadata should be empty
   (test #t (null? (vector-ref c 4))))
+
+(test-group "employee.bin"
+  (define e (parse-file parse-person "./tests/test-vectors/employee.bin"))
+
+  (test
+    '#("Tiffany Doe"               ;; name
+       "tiffanyd@acme.corp"        ;; email
+       #(                          ;; address
+         ("123 Main St" "" "" "")  ;; address
+         "Philadelphia"            ;; city
+         "PA"                      ;; state
+         "United States"           ;; country
+        )
+       1                           ;; repartment
+       "2020-06-21T21:18:05+00:00" ;; hireDate
+       #t                          ;; publicKey
+       ())                         ;; metadata
+    e))

@@ -3,6 +3,10 @@
 (define parse-public-key (parse-data 128))
 (define parse-time parse-string)
 
+(define parse-department
+  (parse-enum
+    (list 0 1 2 3 4 99)))
+
 (define parse-address
   (parse-struct
     (parse-list parse-string 4)
@@ -26,6 +30,7 @@
     parse-string
     parse-string
     parse-address
+    parse-department
     parse-time
     (parse-optional
       parse-public-key)
