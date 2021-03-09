@@ -131,13 +131,14 @@
         (error "length of fixed-length data must be at least 1")
         (parse-bytevector l)))))
 
-;;> Parses a type with zero length. The result is ignored on success.
-;;> Inside \scheme{parse-struct} the result will not be included in the
-;;> list of results.
+;;> Parses a type with zero length. This always returns a \scheme{'void}
+;;> symbol on success.
 
 (define parse-void
-  ;; TODO: Understand how this is supposed to be used and adjust implementation.
-  (parse-ignore parse-epsilon))
+  (parse-map
+    parse-epsilon
+    (lambda (x)
+      'void)))
 
 ;;> \subsection{Aggregate Types}
 
