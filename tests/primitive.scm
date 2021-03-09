@@ -2,8 +2,14 @@
   (test-parse 0   parse-uint #u8(0))
   (test-parse 300 parse-uint #u8(#xac #x2))
 
-  (test-parse 21642243047108056620 parse-uint
-              #u8(#xac #xac #xac #xac #xac #xac #xac #xac #xac #x2))
+  (test-parse 12418871010253280812 parse-uint
+              #u8(#xac #xac #xac #xac #xac #xac #xac #xac #xac #x01))
+
+  ;; 64-bit precision exceeded.
+  (test-parse-error "failed predicate" parse-uint
+    #u8(#xff #xff #xff #xff #xff #xff #xff #xff #xff #x2c))
+
+  ;; Too many octets.
   (test-parse-error "failed predicate" parse-uint
               #u8(#xac #xac #xac #xac #xac #xac #xac #xac #xac #xac #x2))
 

@@ -4,11 +4,10 @@
 
 ;;> Parses an unsigned integer with a variable-length encoding. The
 ;;> maximum precision of such a number is 64-bits. The maximum length of
-;;> an encoded uint is therefore 10 octets. While the length is checked,
-;;> the precision is currently not.
+;;> an encoded uint is therefore 10 octets. If the message exceeds these
+;;> limits a parsing error will be raised.
 
 (define parse-uint
-  ;; TODO: Limit precision to 64-bit.
   (parse-map
     (parse-seq
       ;; Each octet has MSB set, except the last one.
@@ -18,7 +17,10 @@
     (lambda (lst)
       (let* ((join (append (car lst) (cdr lst)))
              (bv   (apply bytevector join)))
-        (bytevector->uint bv)))))
+        (if (and (eq? 10 (bytevector-length bv))
+                 (> (bytevector-u8-ref bv 9) 1))
+          (error "uint overflows a 64-bit integer")
+          (bytevector->uint bv))))))
 
 ;;> Parses a signed integer with a variable-length encoding. The
 ;;> maximum precision of such a number is 64-bits. The maximum length of
@@ -115,12 +117,11 @@
 ;;> If no \var{length} is given, arbitrary data of a variable
 ;;> length in octets is parsed. The data must not be greater
 ;;> than 18,446,744,073,709,551,615 octets in length (the
-;;> maximum value of a u64). Presently, this is not ensured by
-;;> the current implementation. The implementation will raise a
+;;> maximum value of a u64). A parsing error will be raised
+;;> if this limit is exceeded. The implementation will raise a
 ;;> parser construction error if \var{length} is given as zero.
 
 (define (parse-data . length)
-  ;; TODO: Ensure that data is not greater than 18,446,744,073,709,551,615 octets in length.
   (if (null? length)
     (parse-with-context
       parse-uint

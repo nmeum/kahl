@@ -304,7 +304,11 @@
 
 (define (parse-map f proc)
   (lambda (source index sk fk)
-    (f source index (lambda (res s i fk) (sk (proc res) s i fk)) fk)))
+    (f source index (lambda (res s i fk)
+                      (sk (with-exception-handler
+                            (lambda (e) (fk source index (error-object-message e)))
+                            (lambda ()  (proc res)))
+                          s i fk)) fk)))
 
 ;; Parses the same streams as \var{f} but ignores the result on
 ;; success.  Inside a \scheme{parse-seq} the result will not be
