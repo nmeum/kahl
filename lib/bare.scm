@@ -146,6 +146,7 @@
 ;;> zero or one is considered invalid and results in a parsing error.
 
 (define (parse-optional type)
+  ;; TODO: This will require some sort of Maybe type
   (parse-with-context
     parse-u8
     (lambda (opt)
