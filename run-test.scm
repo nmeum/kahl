@@ -29,3 +29,5 @@
   (include "tests/primitive.scm"))
 (test-group "Aggregate Types"
   (include "tests/aggregated.scm"))
+(test-group "Integration Tests"
+  (include "tests/integration.scm"))
