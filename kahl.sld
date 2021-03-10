@@ -20,7 +20,7 @@
 ;;> of \scheme{call-with-parse} for more information.
 
 (define-library (kahl)
-  (import (scheme base) (scheme file) (scheme write) (srfi 1) (srfi 151))
+  (import (scheme base) (scheme file) (scheme write) (srfi 151))
 
   (export make-parse-stream bytevector->parse-stream parse call-with-parse)
   (export parse-uint parse-int parse-u8 parse-u16

@@ -20,7 +20,7 @@
         (lambda (x ys)
           (let* ((lst    (bits->list x))
                  (no-msb (if (msb-set? x)
-                           (drop-right lst 1)
+                           (init lst)
                            lst)))
             (append no-msb ys)))
         '() bv))))
