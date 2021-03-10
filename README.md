@@ -1,14 +1,6 @@
 # kahl
 
-Implementation of [BARE][bare web] in R⁷RS scheme.
-
-## Motivation
-
-This started us as a nice demo for a binary parser combinator library
-based on [`(chibi parse)`][chibi parse] which I had lying around from a
-previous Scheme project I never finished. By providing parser
-combinators for BARE, this library allows application developers to
-follow [langsec][langsec web] patterns for [secure input handling][bratus parser].
+R⁷RS Scheme parser combinator library for decoding [BARE][bare web] messages.
 
 ## Status
 
@@ -16,10 +8,26 @@ With the exception of floating-point numbers (`f32` and `f64`), all
 types from [`draft-devault-bare-01`][draft-devault-bare-01] are
 supported. The BARE schema language is currently not supported, but may
 be supported in future version of this library. Additionally, this
-hasn't been tested extensively yet and the API may still be subject to
-change.
+hasn't been tested extensively and the API is still subject to change.
 
-## Example
+## Installation
+
+Depends on your Scheme implementation. I have tested this with
+[CHICKEN Scheme][chicken scheme] and [chibi-scheme][chibi github].
+For simple experiments, simply use the following commands:
+
+	$ git clone https://github.com/nmeum/kahl
+	$ cd kahl
+	$ chibi-scheme
+	> (import (kahl))
+	> (parse (parse-struct parse-u8 parse-u8) #u8(23 42))
+	#(23 42)
+
+Tests require [`(chibi test)`][chibi test] and can be run as follows:
+
+	$ ./run-tests.scm
+
+## Extended Example
 
 Consider the following [BARE schema][bare schema] definition:
 
@@ -34,6 +42,7 @@ Consider the following [BARE schema][bare schema] definition:
 	}
 
 Messages of this type can be parsed using the following Scheme code:
+This can be parsed using the following Scheme code:
 
 	(import (kahl))
 
@@ -67,13 +76,6 @@ If you want to improve the existing documentation, take a look at the
 default Chibi-Scheme doc environment can be obtained by importing
 [`(chibi doc)`][chibi doc] and running `(make-default-doc-env)`.
 
-## Limitations
-
-* Since this is a parser combinator library it is not possible to
-  satisfy BARE invariants regarding types during parser construction.
-  For instance, it cannot be guaranteed that only primitive non-data
-  types are used as map keys. This is the callers responsibility.
-
 ## License
 
 This program is free software: you can redistribute it and/or modify
@@ -90,11 +92,14 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 [bare web]: https://baremessages.org/
-[chibi parse]: https://synthcode.com/scheme/chibi/lib/chibi/parse.html
 [draft-devault-bare-01]: https://datatracker.ietf.org/doc/html/draft-devault-bare-01
 [bare schema]: https://datatracker.ietf.org/doc/html/draft-devault-bare-01#section-3
 [langsec web]: https://langsec.org/
 [bratus parser]: https://www.usenix.org/publications/login/spring2017/bratus
+[chibi parse]: https://synthcode.com/scheme/chibi/lib/chibi/parse.html
+[chibi test]: https://synthcode.com/scheme/chibi/lib/chibi/test.html
 [chibi scribble]: https://synthcode.com/scheme/chibi/lib/chibi/scribble.html
-[racket scribble]: https://docs.racket-lang.org/scribble/getting-started.html
 [chibi doc]: https://synthcode.com/scheme/chibi/lib/chibi/doc.html
+[racket scribble]: https://docs.racket-lang.org/scribble/getting-started.html
+[chicken scheme]: https://call-cc.org
+[chibi github]: https://github.com/ashinn/chibi-scheme
