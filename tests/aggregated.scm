@@ -1,5 +1,5 @@
 (test-group "optional<type>"
-  (test-parse #t (parse-optional parse-u8) #u8(0))
+  (test-parse 'nothing (parse-optional parse-u8) #u8(0))
   (test-parse 23 (parse-optional parse-u8) #u8(1 23))
   (test-parse-error "invalid option value"
                     (parse-optional parse-u8) #u8(23 42)))

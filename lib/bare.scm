@@ -145,14 +145,17 @@
 ;;> Parses a value of \var{type} which may or may not be present. An
 ;;> optional value whose initial value is set to a number other than
 ;;> zero or one is considered invalid and results in a parsing error.
+;;> If no value is present \scheme{'nothing} is returned.
 
 (define (parse-optional type)
-  ;; TODO: This will require some sort of Maybe type
   (parse-with-context
     parse-u8
     (lambda (opt)
       (cond
-        ((zero? opt)  parse-epsilon)
+        ((zero? opt)
+         (parse-map
+           parse-epsilon
+           (lambda (x) 'nothing)))
         ((eqv? opt 1) type)
         (else (parse-fail "invalid option value"))))))
 

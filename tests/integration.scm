@@ -29,7 +29,7 @@
       )
      1                           ;; department
      "2020-06-21T21:18:05+00:00" ;; hireDate
-     #t                          ;; publicKey
+     nothing                     ;; publicKey
      ())                         ;; metadata
   (parse-file parse-person "employee.bin"))
 
