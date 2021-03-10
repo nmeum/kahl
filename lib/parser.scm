@@ -281,17 +281,24 @@
 (define (parse-repeat f . o)
   (let ((lo (if (pair? o) (car o) 0))
         (hi (and (pair? o) (pair? (cdr o)) (cadr o))))
-    (lambda (source0 index0 sk fk)
-      (let repeat ((source source0) (index index0) (fk fk) (j 0) (res '()))
-        (let ((fk (if (>= j lo)
-                      (lambda (s i r) (sk (reverse res) source index fk))
-                      fk)))
-          (if (and hi (= j hi))
-              (sk (reverse res) source index fk)
-              (f source
-                 index
-                 (lambda (r s i fk) (repeat s i fk (+ j 1) (cons r res)))
-                 fk)))))))
+    (parse-repeat-kons cons f lo hi)))
+
+(define (parse-repeat-kons kons f lo hi)
+  (lambda (source0 index0 sk fk)
+    (let repeat ((source source0) (index index0) (fk fk) (j 0) (res '()))
+      (let ((fk (if (>= j lo)
+                  (lambda (s i r) (sk (reverse res) source index fk))
+                  fk)))
+        (if (and hi (= j hi))
+          (sk (reverse res) source index fk)
+          (f source
+             index
+             (lambda (r s i fk)
+               (let ((v (kons r res)))
+                 (if v
+                   (repeat s i fk (+ j 1) v)
+                   (fk source index "kons failed"))))
+             fk))))))
 
 ;; Parse \var{f} and apply the procedure \var{proc} to the result on success.
 

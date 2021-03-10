@@ -179,20 +179,19 @@
 
 ;;> Parses a mapping of values of type \var{val-type} keyed by
 ;;> values of type \var{val-type}. A message with repeated keys
-;;> is considered invalid. Presently, this implementation does
-;;> not raise a parsing error when encountering such a map. Instead,
-;;> the last field is treated as authoritative.
+;;> is considered invalid. A parsing error is raised if such a
+;;> message is encountered.
 
 (define (parse-mapping key-type val-type)
-  ;; TODO: raise parsing error on duplicated keys
-  (parse-map
-    (parse-with-context
-      parse-uint
-      (lambda (size)
-        (parse-repeat
-          (parse-seq key-type val-type)
-          size size)))
-    reverse)) ;; To ensure that last field is authoritative with assoc
+  (parse-with-context
+    parse-uint
+    (lambda (size)
+      (parse-repeat-kons
+        (lambda (x xs)
+          (and (not (member x xs))
+               (cons x xs)))
+        (parse-seq key-type val-type)
+        size size))))
 
 ;;> Parses a tagged union whose value may be one of any type from a
 ;;> \var{type-vector} of types. Each combinators index in \var{type-vector}
