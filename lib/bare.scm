@@ -102,7 +102,7 @@
 ;;> Parses a string of text. If the data is found to contain invalid
 ;;> UTF-8 sequences, it should be considered invalid. However, this
 ;;> implementation currently uses \scheme{utf8->string} internally,
-;;> does not necessarily raise an error on invalid UTF-8 sequences.
+;;> which does not necessarily raise an error on invalid UTF-8 sequences.
 
 (define parse-string
   ;; TODO: Explicitly check for invalid UTF-8 sequences.
