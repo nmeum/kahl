@@ -87,7 +87,6 @@
 ;;> is raised.
 
 (define (parse-enum values)
-  ;; TODO: Consider using SRFI 113 sets.
   (if (or (null? values) (not (lset-unique? values)))
     (error "enum must be a non-empty list of unique values")
     (parse-with-context
@@ -203,7 +202,6 @@
 ;;> if \var{type-vector} is null.
 
 (define (parse-union type-vector)
-  ;; TODO: Consider using SRFI 113 sets.
   (if (null? type-vector)
     (error "unions must have at least one type")
     (parse-with-context
