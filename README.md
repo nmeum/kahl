@@ -8,7 +8,7 @@ With the exception of floating-point numbers (`f32` and `f64`), all
 types from [`draft-devault-bare-01`][draft-devault-bare-01] are
 supported. The BARE schema language is currently not supported, but may
 be supported in future version of this library. Additionally, this
-hasn't been tested extensively and the API is still subject to change.
+hasn't been tested extensively and the API may still change.
 
 ## Installation
 
