@@ -13,19 +13,6 @@
     (let ((i (dec upto)))
       (append (range i) (list i)))))
 
-(define (bytevector-fold proc seed bv)
-  (define (%bytevector-fold n)
-    (if (zero? n)
-      seed
-      (let ((idx (dec n)))
-        (proc (bytevector-u8-ref bv idx)
-              (%bytevector-fold idx)))))
-
-  (let ((len (bytevector-length bv)))
-    (if (zero? len)
-      seed
-      (%bytevector-fold len))))
-
 (define (bytevector-fold-right proc seed bv)
   (define (%bytevector-fold-right n)
     (if (>= n (bytevector-length bv))
