@@ -34,7 +34,6 @@ Consider the following [BARE schema][bare schema] definition:
 	type Customer {
 		name: string
 		email: string
-		address: Address
 		orders: []{
 			orderId: i64
 			quantity: i32
