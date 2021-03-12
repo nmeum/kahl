@@ -219,7 +219,7 @@
 ;; bytevector of the given size, not a list.
 
 (define (parse-bytevector size)
-  (parse-map
+  (parse-bind
     (parse-seq-list (make-list size parse-byte))
     (lambda (lst)
       (if (zero? size)
@@ -302,7 +302,7 @@
 
 ;; Parse \var{f} and apply the procedure \var{proc} to the result on success.
 
-(define (parse-map f proc)
+(define (parse-bind f proc)
   (lambda (source index sk fk)
     (f source index (lambda (res s i fk)
                       (sk (with-exception-handler
@@ -316,4 +316,4 @@
 ;; boiler-plate without the need for post-processing results.
 
 (define (parse-ignore f)
-  (parse-map f (lambda (res) ignored-value)))
+  (parse-bind f (lambda (res) ignored-value)))

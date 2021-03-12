@@ -8,7 +8,7 @@
 ;;> limits a parsing error will be raised.
 
 (define parse-uint
-  (parse-map
+  (parse-bind
     (parse-seq
       ;; Each octet has MSB set, except the last one.
       ;; A maximum of 10 octets can be passed, i.e. 9 with MSB set and one without.
@@ -28,18 +28,18 @@
 ;;> the precision is currently not.
 
 (define parse-int
-  (parse-map
+  (parse-bind
     parse-uint
     uint->number))
 
 (define (parse-fixed-uint size)
-  (parse-map
+  (parse-bind
     (parse-bytevector size)
     (lambda (bv)
       (bytevector->number size bv))))
 
 (define (parse-fixed-int size)
-  (parse-map
+  (parse-bind
     (parse-fixed-uint size)
     (lambda (n)
       (from-twocomp (* size 8) n))))
@@ -108,7 +108,7 @@
   (parse-with-context
     parse-uint
     (lambda (size)
-      (parse-map
+      (parse-bind
         (parse-bytevector size)
         utf8->string))))
 
@@ -135,7 +135,7 @@
 ;;> symbol on success.
 
 (define parse-void
-  (parse-map
+  (parse-bind
     parse-epsilon
     (lambda (x)
       'void)))
@@ -153,7 +153,7 @@
     (lambda (opt)
       (cond
         ((zero? opt)
-         (parse-map
+         (parse-bind
            parse-epsilon
            (lambda (x) 'nothing)))
         ((eqv? opt 1) type)
@@ -220,6 +220,6 @@
   (if (or (null? types)
           (null? (car types)))
     (error "structs must have at least one field")
-    (parse-map
+    (parse-bind
       (parse-seq-list types)
       list->vector)))
