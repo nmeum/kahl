@@ -190,6 +190,12 @@
   (lambda (source index sk fk)
     (sk #t source index fk)))
 
+;; Parse nothing successfully and return \var{ret}.
+
+(define (parse-result ret)
+  (parse-bind parse-epsilon
+              (lambda (x) ret)))
+
 ;; Always fails to parse with \var{msg}.
 
 (define (parse-fail msg)

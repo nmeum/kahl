@@ -135,10 +135,7 @@
 ;;> symbol on success.
 
 (define parse-void
-  (parse-bind
-    parse-epsilon
-    (lambda (x)
-      'void)))
+  (parse-result 'void))
 
 ;;> \subsection{Aggregate Types}
 
@@ -152,10 +149,7 @@
     parse-u8
     (lambda (opt)
       (cond
-        ((zero? opt)
-         (parse-bind
-           parse-epsilon
-           (lambda (x) 'nothing)))
+        ((zero? opt)  (parse-result 'nothing))
         ((eqv? opt 1) type)
         (else (parse-fail "invalid option value"))))))
 
