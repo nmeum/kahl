@@ -182,7 +182,7 @@
 ;;> is considered invalid. A parsing error is raised if such a
 ;;> message is encountered.
 
-(define (parse-mapping key-type val-type)
+(define (parse-map key-type val-type)
   (parse-with-context
     parse-uint
     (lambda (size)

@@ -6,14 +6,14 @@
 
 (test-group "map[type A]type B"
   (test-parse '((35 2) (5 6))
-              (parse-mapping parse-u8 parse-u8)
+              (parse-map parse-u8 parse-u8)
               #u8(#x2 #x23 #x2 #x5 #x6))
   (test-parse '()
-              (parse-mapping parse-u16 parse-u32)
+              (parse-map parse-u16 parse-u32)
               #u8(#x0))
 
   (test-parse-error "kons failed"
-                    (parse-mapping parse-u8 parse-u8)
+                    (parse-map parse-u8 parse-u8)
                     #u8(#x2 #xac #xab #xac #xab)))
 
 (test-group "[length]type"

@@ -23,7 +23,7 @@
       (parse-struct
         parse-i64
         parse-i32))
-    (parse-mapping parse-string parse-data)))
+    (parse-map parse-string parse-data)))
 
 (define parse-employee
   (parse-struct
@@ -34,7 +34,7 @@
     parse-time
     (parse-optional
       parse-public-key)
-    (parse-mapping parse-string parse-data)))
+    (parse-map parse-string parse-data)))
 
 (define parse-terminated-employee parse-void)
 
