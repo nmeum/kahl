@@ -237,9 +237,9 @@
         ((f size) source field-start sk fk)
         (fk source index "expected field of given size")))))
 
-(define ignored-value (list 'ignore))
-
 (define (parse-seq-list o)
+  (define ignored-value (list 'ignore))
+
   (cond
    ((null? o)
     parse-epsilon)
@@ -309,11 +309,3 @@
                             (lambda (e) (fk source index (error-object-message e)))
                             (lambda ()  (proc res)))
                           s i fk)) fk)))
-
-;; Parses the same streams as \var{f} but ignores the result on
-;; success.  Inside a \scheme{parse-seq} the result will not be
-;; included in the list of results.  Useful for discarding
-;; boiler-plate without the need for post-processing results.
-
-(define (parse-ignore f)
-  (parse-bind f (lambda (res) ignored-value)))
