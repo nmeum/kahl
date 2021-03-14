@@ -10,7 +10,7 @@ supported. The BARE schema language is currently not supported, but may
 be supported in future version of this library. Additionally, this
 hasn't been tested extensively and the API may still change.
 
-## Installation
+## Usage
 
 Depends on your Scheme implementation. I have tested this with
 [CHICKEN Scheme][chicken scheme] and [chibi-scheme][chibi github].
