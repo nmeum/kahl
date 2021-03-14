@@ -41,7 +41,6 @@ Consider the following [BARE schema][bare schema] definition:
 	}
 
 Messages of this type can be parsed using the following Scheme code:
-This can be parsed using the following Scheme code:
 
 	(import (kahl))
 
