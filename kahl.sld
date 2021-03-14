@@ -14,7 +14,7 @@
 ;;> errors occurring during parser constructing (e.g. creating an empty
 ;;> struct) and errors occurring during parsing (e.g. parsing a tagged
 ;;> union containing an unsupported type). The former result in an
-;;> R\superscript{7}RS exception, the latter result in invocation of a
+;;> R\superscript{7}RS exception, the latter result in the invocation of a
 ;;> specified failure continuation which defaults to a function ignoring
 ;;> the failure reason and returning false. Refer to the documentation
 ;;> of \scheme{call-with-parse} for more information.
