@@ -67,7 +67,7 @@ This library is documented using Scheme Scribble syntax as implemented by
 [chibi scribble][chibi scribble]. Documentation can be generated using
 `chibi-doc(1)`. To generate HTML documentation run:
 
-	$ chibi-doc kahl > kahl.html
+	$ chibi-doc -h kahl > kahl.html
 
 If you want to improve the existing documentation, take a look at the
 [Scribble quick start guide][racket scribble]. Commands supported in the
