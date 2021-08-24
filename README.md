@@ -56,7 +56,7 @@ Messages of this type can be parsed using the following Scheme code:
 
 	;; Create a parse stream for the file customer.bin
 	;; and use the parse-customer parser to parse it.
-	(let ((s make-parse-stream "customer.bin"))
+	(let ((s (make-parse-stream "customer.bin")))
 	  (parse parse-customer s))
 
 Refer to the documentation for more information on individual procedures.
