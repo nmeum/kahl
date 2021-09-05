@@ -237,11 +237,11 @@
 
   (lambda (source index sk fk)
     ;; call-with-parse modifies source and needs to be called first.
-    (let* ((size (call-with-parse ctx source index yield fk))
+    (let* ((ctx (call-with-parse ctx source index yield fk))
            (field-start (parse-stream-offset source)))
-      (if size
-        ((f size) source field-start sk fk)
-        (fk source index "expected field of given size")))))
+      (if ctx
+        ((f ctx) source field-start sk fk)
+        (fk source index "context parser failed")))))
 
 (define (parse-seq-list o)
   (define ignored-value (list 'ignore))
